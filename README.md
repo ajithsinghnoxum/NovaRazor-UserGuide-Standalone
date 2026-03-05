@@ -2,7 +2,7 @@
 
 ## 📖 About This Documentation Package
 
-This is a **standalone documentation package** for the NovaRazor VS Code Extension v3.5.0. It contains the complete user guide with all referenced screenshots and images, making it easy to share with team members, clients, or other users.
+This is a **standalone documentation package** for the NovaRazor VS Code Extension v4.0.0. It contains the complete user guide with all referenced screenshots and images, making it easy to share with team members, clients, or other users.
 
 ## 📁 Package Contents
 
@@ -67,7 +67,8 @@ The user guide covers:
 - All major features demonstrated with images
 
 ### 🛠️ **Technical Reference**
-- Complete command palette reference (25+ commands)
+- Complete command palette reference (30+ commands)
+- Quick Pick Command Palette (`Alt+N`) with 16 grouped operations
 - Troubleshooting guides with solutions
 - Performance optimization tips
 - Advanced usage patterns
@@ -78,15 +79,18 @@ The user guide covers:
 - Performance optimization strategies
 - Error prevention techniques
 
-## ✨ What's New in v3.5.0
+## ✨ What's New in v4.0.0
 
-This documentation reflects the latest version (3.5.0) with:
+This documentation reflects the latest version (4.0.0) with:
 
-- ✅ **Complete UI Modernization** - Professional gradient card designs
-- ✅ **SVG Icon System** - 13+ custom icons replacing emoji
-- ✅ **Performance Improvements** - Eliminated artificial delays
-- ✅ **Critical Bug Fixes** - Fixed cache race conditions and timing issues
-- ✅ **Real-time Communication** - Instant file status updates
+- ✅ **Quick Pick Command Palette (`Alt+N`)** - Instant access to all 16 operations
+- ✅ **Preview Template** - Preview Razor templates with script and external link controls
+- ✅ **Refresh from Server** - Pull latest content without re-fetching the object
+- ✅ **Tab-sync After Restart** - Sidebar syncs with active file, survives VS Code restarts
+- ✅ **File Tracking Persistence** - Records always persisted immediately to globalState
+- ✅ **API Version Selection** - Choose target API version from the sidebar
+- ✅ **Multi-channel Logging** - Set Log Level, Toggle Log Channel, Clear Logs commands
+- ✅ **Performance Audit Fixes** - LRU cache, debounced watchers, async MD5 with cancellation
 
 ## 🎯 Target Audience
 
@@ -106,9 +110,9 @@ For technical support or questions:
 
 ## 📅 Documentation Version
 
-- **Extension Version**: 3.5.0
-- **Documentation Date**: August 2025
-- **Screenshots**: All current as of v3.5.0 release
+- **Extension Version**: 4.0.0
+- **Documentation Date**: March 2026
+- **Screenshots**: All current as of v4.0.0 release
 - **Coverage**: Complete feature set and workflows
 
 ---

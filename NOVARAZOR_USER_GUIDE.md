@@ -1,6 +1,6 @@
 # NovaRazor Extension - User Guide
 
-**Version 3.5.0** | **VS Code Extension for Nova CMS Integration**
+**Version 4.0.0** | **VS Code Extension for Nova CMS Integration**
 
 ## Table of Contents
 1. [Quick Start Guide](#quick-start-guide)
@@ -11,12 +11,15 @@
 6. [Branch & Object Selection](#branch--object-selection)
 7. [File Management & Status Tracking](#file-management--status-tracking)
 8. [Update Operations & Modes](#update-operations--modes)
-9. [Command Palette Reference](#command-palette-reference)
-10. [Cache Management & Performance](#cache-management--performance)
-11. [Advanced Operations](#advanced-operations)
-12. [Troubleshooting & Diagnostics](#troubleshooting--diagnostics)
-13. [Tips & Best Practices](#tips--best-practices)
-14. [Version Information](#version-information)
+9. [Quick Pick Command Palette (Alt+N)](#quick-pick-command-palette-altn)
+10. [Preview & Refresh](#preview--refresh)
+11. [Logging System](#logging-system)
+12. [VS Code Command Reference](#vs-code-command-reference)
+13. [Cache Management & Performance](#cache-management--performance)
+14. [Advanced Operations](#advanced-operations)
+15. [Troubleshooting & Diagnostics](#troubleshooting--diagnostics)
+16. [Tips & Best Practices](#tips--best-practices)
+17. [Version Information](#version-information)
 
 ---
 
@@ -48,10 +51,16 @@ NovaRazor is a VS Code extension that integrates with Nova CMS API to provide Ra
 
 ### Key Capabilities
 - **Nova CMS Integration**: Direct API connectivity with your Nova instance
+- **Quick Pick Command Palette**: Press `Alt+N` for instant access to all 16 operations
 - **File Management**: Organized file creation with naming conventions
 - **Status Tracking**: Visual feedback on file states and operations
-- **Multiple View Support**: Work with multiple Razor objects simultaneously  
+- **Tab-sync & Persistence**: Sidebar auto-syncs with active file; tracking survives VS Code restarts
+- **Multiple View Support**: Work with multiple Razor objects simultaneously
 - **MD5-based Change Detection**: Upload optimization and version control
+- **Preview Template**: Preview Razor templates with optional external link support
+- **Refresh from Server**: Pull latest content from Nova without re-fetching the object
+- **Multi-channel Logging**: Configurable log levels, channels, and export capabilities
+- **API Version Selection**: Choose the target API version from the sidebar
 - **Sync Operations**: Full sync, batch updates, and conflict resolution
 - **Performance Diagnostics**: Built-in testing and monitoring tools
 
@@ -83,12 +92,14 @@ The NovaRazor sidebar provides an interface for all extension operations:
 
 **Main Interface Elements:**
 - **Base URL Input**: Enter your Nova instance URL with connection status
+- **API Version Selector**: Choose the target API version for your Nova instance
 - **Connection Status Indicator**: Shows your Nova connection state
 - **Branches Dropdown**: Select from available branches with search functionality
 - **Razor Objects Dropdown**: Choose specific Razor objects with filtering
-- **Action Buttons**: Buttons for fetch, update, and management operations
-- **File Status Overview**: Tracking of all managed files
+- **Action Buttons**: Buttons for fetch, update, preview, refresh, and management operations
+- **File Status Overview**: Tracking of all managed files with persistent records
 - **Update Mode Controls**: Configure single or batch update operations
+- **External Links Checkbox**: Toggle loading of external resources in preview
 - **Version Display**: Extension version information and settings
 
 **Visual Workflow:**
@@ -379,16 +390,128 @@ For debugging and troubleshooting, the extension provides configurable logging l
 
 ---
 
-## Command Palette Reference
+## Quick Pick Command Palette (Alt+N)
+
+The NovaRazor Quick Pick Command Palette provides instant access to all extension operations from a single keyboard shortcut.
+
+### How to Open
+
+- Press **`Alt+N`** from anywhere in VS Code (any editor, any panel)
+- Or use the standard VS Code command palette: `Ctrl+Shift+P` → "NovaRazor: Command Palette"
+
+### Available Operations
+
+The Quick Pick menu organizes 16 operations into 4 logical groups:
+
+#### Primary Operations
+| Operation | Description |
+|-----------|-------------|
+| Upload Razor Code | Upload current file to NovaDB |
+| Batch Update | Upload all modified files |
+| Refresh from Server | Pull latest content from server |
+| Preview Template | Preview Razor template |
+| Fetch Razor Objects | Load Razor objects for branch |
+| Fetch Branches | Connect to NovaDB and load branches |
+
+#### File & Sync
+| Operation | Description |
+|-----------|-------------|
+| Re-sync Active File | Sync sidebar with current editor |
+| Show File Status | Show file status panel |
+| Sync Visual Indicators | Refresh all file indicators |
+
+#### Logging
+| Operation | Description |
+|-----------|-------------|
+| Set Log Level | Change logging verbosity |
+| Toggle Log Channel | Enable/disable log channels |
+| Clear Logs | Clear all log output |
+
+#### Debug
+| Operation | Description |
+|-----------|-------------|
+| Show Cache Status | View cache metrics |
+| Show Change Cache | View file tracking data |
+| List All Views | Show open Razor views |
+| Reset Extension | Clear all data and reload |
+
+### How It Works
+
+- **Standalone commands** (File & Sync, Logging, Debug) execute directly
+- **Sidebar-dependent commands** (Primary Operations) automatically focus the sidebar, wait for the webview to initialize, then trigger the action with your current state (base URL, selected branch, selected object)
+- Type to filter operations by name or description
+- Press `Escape` to dismiss without action
+
+---
+
+## Preview & Refresh
+
+### Preview Template
+
+Preview your Razor template directly within VS Code:
+
+1. Select a Razor object and fetch its content
+2. Click **"Preview Template"** in the sidebar or use `Alt+N` → "Preview Template"
+3. A preview panel opens showing the rendered HTML output
+
+**Preview Options:**
+- **Allow Scripts**: Enable JavaScript execution in the preview (checkbox in sidebar)
+- **Allow External Links**: Load external CSS/JS resources (checkbox in sidebar)
+
+### Refresh from Server
+
+Pull the latest content from Nova without re-fetching the entire object:
+
+1. Have a Razor object open and selected
+2. Click **"Refresh from Server"** in the sidebar or use `Alt+N` → "Refresh from Server"
+3. The local file updates with the latest server content
+4. Change detection recalculates automatically
+
+This is useful when another team member has updated the same object on the server.
+
+---
+
+## Logging System
+
+NovaRazor includes a multi-channel logging system for debugging and monitoring.
+
+### Log Levels
+
+| Level | Description |
+|-------|-------------|
+| **Error** | Critical failures only |
+| **Warning** | Potential issues and deprecations |
+| **Info** | General operational information |
+| **Debug** | Detailed diagnostic output |
+
+### Log Commands
+
+- **Set Log Level**: Change the verbosity of log output (`Alt+N` → "Set Log Level")
+- **Toggle Log Channel**: Enable or disable specific log channels (e.g., Cache Management, Core, File Operations)
+- **Clear Logs**: Clear all log output from the output panel
+- **Export Logs**: Copy log output for sharing or support
+
+### Viewing Logs
+
+1. Open VS Code Output panel (`Ctrl+Shift+U`)
+2. Select "NovaRazor" from the dropdown
+3. Logs appear in real-time during operations
+
+---
+
+## VS Code Command Reference
 
 Access all commands via `Ctrl+Shift+P` (Windows/Linux) or `Cmd+Shift+P` (Mac), then type "NovaRazor":
 
 ### Core Operations
 | Command | Description | Use Case |
 |---------|-------------|----------|
+| **NovaRazor: Command Palette** | Open Quick Pick menu (`Alt+N`) | Fast access to all operations |
 | **NovaRazor: Add Razor Code** | Insert Razor code into current editor | Quick code insertion |
 | **NovaRazor: Update Razor Code** | Update selected Razor object | Single object updates |
 | **NovaRazor: Batch Update Razor Code** | Update multiple objects simultaneously | Bulk operations |
+| **NovaRazor: Preview Template** | Preview Razor template in panel | Template verification |
+| **NovaRazor: Refresh from Server** | Pull latest content from server | Server sync |
 
 ### Data Management
 | Command | Description | Use Case |
@@ -404,6 +527,13 @@ Access all commands via `Ctrl+Shift+P` (Windows/Linux) or `Cmd+Shift+P` (Mac), t
 | **NovaRazor: Full Sync Visual Indicators** | Complete indicator refresh | Comprehensive sync |
 | **NovaRazor: Refresh File Decorations** | Reload file decoration states | Visual updates |
 | **NovaRazor: Manual Sync with Active File** | Sync currently active file | Focused synchronization |
+
+### Logging
+| Command | Description | Use Case |
+|---------|-------------|----------|
+| **NovaRazor: Set Log Level** | Change logging verbosity | Debug configuration |
+| **NovaRazor: Toggle Log Channel** | Enable/disable specific channels | Focused debugging |
+| **NovaRazor: Clear Logs** | Clear all log output | Clean slate |
 
 ### Monitoring & Status
 | Command | Description | Use Case |
@@ -563,11 +693,16 @@ For technical support or advanced debugging:
 ### Advanced Debugging
 
 **Output Panel Monitoring:**
-- Open VS Code Output panel
+- Open VS Code Output panel (`Ctrl+Shift+U`)
 - Select "NovaRazor" from the dropdown
 - Monitor real-time logs during operations
 - Error messages include stack traces for debugging
 - Performance metrics logged for analysis
+
+**Log Channel Management:**
+- Use `Alt+N` → "Toggle Log Channel" to enable/disable specific channels (e.g., Cache Management, Core, File Operations)
+- Use `Alt+N` → "Set Log Level" to increase verbosity for detailed debugging
+- Use `Alt+N` → "Clear Logs" for a fresh output before reproducing issues
 
 **Performance Profiling:**
 - Use diagnostic commands to identify bottlenecks
@@ -583,11 +718,13 @@ For technical support or advanced debugging:
 
 **Efficient Daily Usage:**
 1. **Start with Connection**: Connect to Nova instance once per session
-2. **Keep Sidebar Visible**: Pin NovaRazor sidebar for quick access
-3. **Use Professional Features**: Leverage search in dropdowns for efficiency
-4. **Batch Operations**: Group related changes for bulk updates
-5. **Monitor Status**: Keep File Status Overview visible for real-time feedback
-6. **Let Automation Work**: Allow MD5 change detection to optimize uploads
+2. **Use Alt+N**: Press `Alt+N` for instant access to any operation without navigating menus
+3. **Keep Sidebar Visible**: Pin NovaRazor sidebar for quick access
+4. **Use Professional Features**: Leverage search in dropdowns for efficiency
+5. **Batch Operations**: Group related changes for bulk updates
+6. **Monitor Status**: Keep File Status Overview visible for real-time feedback
+7. **Let Automation Work**: Allow MD5 change detection to optimize uploads
+8. **Preview Before Upload**: Use Preview Template to verify changes before pushing
 
 **File Organization Best Practices:**
 - Files automatically named with intelligent conventions
@@ -643,7 +780,7 @@ For technical support or advanced debugging:
 
 ## Version Information
 
-### Current Version: 3.5.0
+### Current Version: 4.0.0
 
 **How to Check Your Version:**
 - Version number displayed at bottom of NovaRazor sidebar
@@ -651,51 +788,44 @@ For technical support or advanced debugging:
 - Check VS Code Extensions panel for complete details and update status
 - Use Command Palette for version-specific features
 
-### Major Updates in v3.5.0
+### Major Updates in v4.0.0
 
-**🎨 UI/UX Enhancements:**
-- ✅ **Complete UI Modernization**: Professional gradient card-based design
-- ✅ **SVG Icon System**: 13+ custom SVG icons replacing emoji for consistency
-- ✅ **Professional Visual Design**: Modern, clean interface with VS Code theme integration
-- ✅ **Enhanced Status Indicators**: Real-time visual feedback with professional icons
-- ✅ **Improved Responsiveness**: Instant UI updates and smooth animations
+**New Features:**
+- ✅ **Quick Pick Command Palette (Alt+N)**: Instant access to all 16 operations from a single shortcut, organized into 4 groups (Primary Operations, File & Sync, Logging, Debug)
+- ✅ **Preview Template**: Preview Razor templates directly in VS Code with configurable script and external link permissions
+- ✅ **Refresh from Server**: Pull latest content from Nova without re-fetching the entire object
+- ✅ **API Version Selection**: Choose the target API version from the sidebar UI
+- ✅ **External Links Checkbox**: Toggle loading of external CSS/JS resources in template preview
+- ✅ **Multi-channel Logging System**: Set Log Level, Toggle Log Channel, Clear Logs, and Export Logs commands with dedicated output channels
 
-**⚡ Performance Improvements:**
-- ✅ **Eliminated Artificial Delays**: Immediate feedback on all operations
-- ✅ **Real-time Status Updates**: File changes reflect instantly in UI
-- ✅ **Optimized Progress Tracking**: Fast, responsive progress indicators
-- ✅ **Enhanced Memory Management**: Better resource utilization
-- ✅ **Async Operation Improvements**: Non-blocking UI during operations
+**Reliability & Persistence:**
+- ✅ **Tab-sync After Restart**: Sidebar automatically syncs with the active file when switching tabs, even after VS Code restarts
+- ✅ **File Tracking Persistence**: Hash records always persisted to globalState immediately (not just at memory pressure thresholds), eliminating "No tracking record found" errors
+- ✅ **Filename-based Recovery**: Lost tracking records are recovered from the filename pattern (`{branch}_{identifier}.cshtml`), preventing data loss
+- ✅ **Partial Sync Support**: Sidebar syncs even when numeric object ID is unavailable, showing branch and file info
 
-**🐛 Bug Fixes:**
-- ✅ **Fixed Cache Race Condition**: Eliminated phantom files after cache clearing
-- ✅ **Communication**: Fixed file status update delays
-- ✅ **Progress Spinner Issues**: Resolved spinning and timing problems
-- ✅ **Memory Leak Prevention**: Proper cleanup of timeouts and resources
-- ✅ **Connection Stability**: Improved reliability of Nova API connections
+**Performance (Audit Fixes):**
+- ✅ **Eliminated Redundant Re-renders**: Optimized React context to prevent full-tree re-renders
+- ✅ **Debounced File Watchers**: Reduced overhead from rapid save events
+- ✅ **LRU Cache with Bounded Size**: Configurable max entries, max age, and eviction policies
+- ✅ **Async MD5 with Cancellation**: Non-blocking hash calculations with abort support
 
-**🔧 Technical Improvements:**
-- ✅ **TypeScript Interface Updates**: Better type safety and development experience
-- ✅ **React State Management**: Enhanced context and state handling
-- ✅ **Error Handling**: Error reporting and recovery
-- ✅ **Logging Enhancements**: Better debugging and diagnostic information
-- ✅ **Code Quality**: Refactoring and optimization
+### Previous Versions
 
-### Previous Major Features (v3.3.0 and earlier)
+**v3.5.0:**
+- Complete UI modernization with gradient card-based design
+- SVG icon system (13+ custom icons replacing emoji)
+- Eliminated artificial delays for immediate feedback
+- Fixed cache race condition (phantom files after clearing)
+- Fixed progress spinner timing issues
+- Enhanced TypeScript type safety and React state management
 
-**Core Features:**
-- ✅ Version display in sidebar
-- ✅ MD5-based change detection system
-- ✅ Cache management with monitoring
-- ✅ Batch update capabilities
-- ✅ Diagnostic and testing tools
-
-**Stability Improvements:**
-- ✅ Eliminated race conditions in MD5 operations
-- ✅ Fixed memory leaks in timeout handling
-- ✅ Resolved unsafe file operations
-- ✅ Error handling and user feedback
-- ✅ Resource management
+**v3.3.0 and earlier:**
+- MD5-based change detection system
+- Cache management with monitoring
+- Batch update capabilities
+- Diagnostic and testing tools
+- Eliminated race conditions in MD5 operations
 
 ---
 
@@ -756,10 +886,11 @@ This guide covers all aspects of the NovaRazor extension, from basic setup to ad
 6. 📊 Monitor status with visual indicators
 
 **For Advanced Users:**
+- Press `Alt+N` for the Quick Pick Command Palette — fastest way to any operation
 - Use batch operations for efficiency
-- Use diagnostic commands for performance optimization  
-- Integrate with VS Code's features
+- Preview templates before uploading with the Preview Template feature
+- Use the multi-channel logging system to debug specific subsystems
+- Use diagnostic commands for performance optimization
 - Monitor cache and performance metrics
-- Customize workflows with Command Palette automation
 
 The extension continues to evolve with user feedback and Nova CMS developments. Stay updated through VS Code's extension update system for the latest features and improvements.
