@@ -1,6 +1,6 @@
 # NovaRazor Extension - Standalone User Guide
 
-## 📖 About This Documentation Package
+## 📖 About This Documentation
 
 This is a **standalone documentation package** for the NovaRazor VS Code Extension v4.0.0. It contains the complete user guide with all referenced screenshots and images, making it easy to share with team members, clients, or other users.
 
